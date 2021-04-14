@@ -1,77 +1,28 @@
-// import React from 'react'
-// import CanvasJS from 'canvasjs';
-// import  CanvasJSChart from 'canvasjs';
-// function App() {
-//   return (
-//     <div>
+import React from "react";
+import { LineChart, Line, CartesianGrid, XAxis, YAxis } from "recharts";
 
-//     </div>
-//   )
-// }
-// import CanvasJS from 'canvasjs';
-// export default App
-
-import React, { useEffect, useState } from "react";
-import Paper from "@material-ui/core/Paper";
-import {
-  ArgumentAxis,
-  ValueAxis,
-  Chart,
-  LineSeries,
-  SplineSeries,
-  Legend,
-  Tooltip,
-} from "@devexpress/dx-react-chart-material-ui";
-import { ValueScale, Animation } from "@devexpress/dx-react-chart";
-import { EventTracker } from "@devexpress/dx-react-chart";
+const data = [
+  { name: "Page A", uv: 1000, pv: 2400, amt: 2400, uvError: [75, 20] },
+  { name: "Page B", uv: 300, pv: 4567, amt: 2400, uvError: [90, 40] },
+  { name: "Page C", uv: 280, pv: 1398, amt: 2400, uvError: 40 },
+  { name: "Page D", uv: 200, pv: 9800, amt: 2400, uvError: 20 },
+  { name: "Page E", uv: 278, pv: null, amt: 2400, uvError: 28 },
+  { name: "Page F", uv: 189, pv: 4800, amt: 2400, uvError: [90, 20] },
+  { name: "Page G", uv: 189, pv: 4800, amt: 2400, uvError: [28, 40] },
+  { name: "Page H", uv: 189, pv: 4800, amt: 2400, uvError: 28 },
+  { name: "Page I", uv: 189, pv: 4800, amt: 2400, uvError: 28 },
+  { name: "Page J", uv: 189, pv: 4800, amt: 2400, uvError: [15, 60] },
+];
 
 function App() {
-  const [data, setData] = useState([]);
-
-  useEffect(() => {
-    const generateData = (start, end, step) => {
-      const m = 1.08 * Math.pow(9.1, -31);
-      const h = 6.626 * Math.pow(10, -34);
-      const data = [];
-      for (let i = start; i < end; i += step) {
-        data.push({
-          // splineValue: Math.sin(i) / i,
-          // lineValue: (i / 15) ** 2.718 - 0.2,
-          argument: i,
-          splineValue:
-            Math.sqrt((2 * Math.PI * m) / h ** 2) /
-            Math.sqrt(i * 1.6021773 * Math.pow(10, -22)),
-          // lineValue:
-          //   Math.sqrt((2 * Math.PI * m) / h ** 2) /
-          //   Math.sqrt(i * 1.6021773 * Math.pow(10, -22)),
-        });
-      }
-
-      return data;
-    };
-    let dat = generateData(2, 100, 5);
-    setData(dat);
-    console.log(dat);
-  }, []);
-
   return (
     <div>
-      <Paper>
-        <Chart data={data}>
-          <ArgumentAxis />
-          <ValueAxis />
-
-          <LineSeries valueField="lineValue" argumentField="argument" />
-          <SplineSeries valueField="splineValue" argumentField="argument" />
-          {/* <Animation /> */}
-          <Legend />
-          <EventTracker />
-          <Tooltip />
-        </Chart>
-      </Paper>
-      {/* <button onClick={() => setData(generateData(3.5, 22, 0.5))}>
-        Change value
-      </button> */}
+      <LineChart width={600} height={300} data={data}>
+        <Line type="monotone" dataKey="uv" stroke="#8884d8" />
+        <CartesianGrid stroke="#ccc" />
+        <XAxis dataKey="name" />
+        <YAxis />
+      </LineChart>
     </div>
   );
 }
